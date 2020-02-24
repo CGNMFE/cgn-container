@@ -6,7 +6,10 @@ const initialState = {
 };
 
 export const login = activeUser => {
-  console.log("HIT LOGIN");
+  console.log("HIT LOGIN", activeUser);
+  if (!activeUser.attributes) {
+    activeUser.attributes = {};
+  }
   activeUser.attributes.profilePic = `https://robohash.org/${activeUser.username}`;
   activeUser.attributes.loggedIn = true;
   return {

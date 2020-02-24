@@ -45,7 +45,7 @@ function ForgotPassword() {
     return (
       <div className="parent-container">
         <section className="auth-container">
-          <h4 className="title is-4">Forgot password</h4>
+          <h4 className="title is-4">Forgot Password</h4>
           <form style={{ padding: "15px" }}>
             <div
               style={{

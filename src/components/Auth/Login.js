@@ -10,6 +10,7 @@ import FormErrors from "./utility/FormErrors";
 export function Login(props) {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [newPassword, setNewPass] = React.useState("");
   const [errors, setErrors] = React.useState({
     cognito: null,
     blankfield: false,
@@ -49,14 +50,20 @@ export function Login(props) {
     console.log(props);
   }
 
-  if (user && user.username) {
+  async function setNewPassword(e) {
+    e.preventDefault();
+    const response = Auth.completeNewPassword(user, newPassword);
+    console.log(response);
+  }
+
+  if (user && user.username && user.challengeName !== "NEW_PASSWORD_REQUIRED") {
     console.log(user.username);
     return <Redirect to="/" />;
   }
   return (
     <div className="parent-container">
       <div className="auth-container">
-        <h4 className="title is-4">Sign in</h4>
+        <h4 className="title is-4">Sign In</h4>
         <FormErrors formerrors={errors} />
         <form>
           <div className="input-container">
@@ -81,7 +88,11 @@ export function Login(props) {
             </div>
             <div className="field">
               <label>
-                <b>Password:</b>
+                {user && user.username ? (
+                  <b>New Password:</b>
+                ) : (
+                  <b>Password:</b>
+                )}
               </label>
               <p className="control has-icons-left">
                 <input
@@ -89,8 +100,12 @@ export function Login(props) {
                   id="password"
                   type="password"
                   placeholder="Enter Password"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
+                  value={user && user.username ? newPassword : password}
+                  onChange={
+                    user && user.username
+                      ? e => setNewPass(e.target.value)
+                      : e => setPassword(e.target.value)
+                  }
                   required
                 />
                 <span className="icon is-small is-left">
@@ -101,7 +116,11 @@ export function Login(props) {
             <button
               type="submit"
               className="login-button"
-              onClick={e => loginUser(e)}
+              onClick={
+                user && user.username
+                  ? e => setNewPassword(e)
+                  : e => loginUser(e)
+              }
             >
               Login
             </button>
