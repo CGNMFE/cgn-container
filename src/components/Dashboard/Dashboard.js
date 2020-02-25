@@ -1,8 +1,8 @@
-import React, { Component } from "./node_modules/react";
-import { connect } from "./node_modules/react-redux";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import { logout } from "../../Redux/Reducers/authReducer";
-import { Redirect } from "./node_modules/react-router-dom";
-import { Auth } from "./node_modules/aws-amplify";
+import { Redirect } from "react-router-dom";
+import { Auth } from "aws-amplify";
 
 export class Dashboard extends Component {
   logoutUser = () => {

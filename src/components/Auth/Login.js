@@ -1,8 +1,8 @@
-import React from "./node_modules/react";
-import { connect } from "./node_modules/react-redux";
+import React from "react";
+import { connect } from "react-redux";
 import { login } from "../../Redux/Reducers/authReducer";
-import { Redirect } from "./node_modules/react-router-dom";
-import Amplify, { Auth } from "./node_modules/aws-amplify";
+import { Redirect } from "react-router-dom";
+import Amplify, { Auth } from "aws-amplify";
 import "./Auth.css";
 import Validate from "./utility/FormValidation";
 import FormErrors from "./utility/FormErrors";

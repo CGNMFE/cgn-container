@@ -1,10 +1,10 @@
-import React from "./node_modules/react";
+import React from "react";
 import "./Auth.css";
 import Validate from "./utility/FormValidation";
 import FormErrors from "./utility/FormErrors";
 import ForgotPassReset from "./ForgotPassReset";
-import { Redirect } from "./node_modules/react-router-dom";
-import { Auth } from "./node_modules/aws-amplify";
+import { Redirect } from "react-router-dom";
+import { Auth } from "aws-amplify";
 
 function ForgotPassword() {
   const [email, setEmail] = React.useState("");
