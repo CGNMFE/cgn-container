@@ -5,7 +5,7 @@ import Validate from "./utility/FormValidation";
 import FormErrors from "./utility/FormErrors";
 import { Redirect, Link } from "react-router-dom";
 
-function ForgotPassword() {
+function ForgotPassword(props) {
   const [verificationCode, setCode] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [newPass1, setNewPass1] = React.useState("");
@@ -25,6 +25,13 @@ function ForgotPassword() {
       passwordmatch: false
     });
   }
+
+  useEffect(() => {
+    if (props.history.location.search.length > 3) {
+      let splitSearch = props.history.location.search.split("$");
+      setCode(splitSearch[1]);
+    }
+  }, []);
 
   useEffect(() => {
     if (newPass1 === newPass2) {
@@ -58,6 +65,7 @@ function ForgotPassword() {
     } else setErrors({ ...errors, passwordmatch: true });
   }
   if (reset === true) return <Redirect to="/" />;
+  console.log(props.history);
   return (
     <div className="parent-container">
       <section className="auth-container">

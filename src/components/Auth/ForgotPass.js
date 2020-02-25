@@ -32,7 +32,7 @@ function ForgotPassword() {
     }
     try {
       let response = await Auth.forgotPassword(email);
-      console.log(response);
+      console.log("Reset request obj: ", response);
       setResetting(true);
     } catch (error) {
       let err = null;
@@ -96,7 +96,17 @@ function ForgotPassword() {
       </div>
     );
   }
-  return <Redirect to="/auth/resetpass" />;
+  return (
+    <div className="parent-container">
+      <div>
+        <i
+          className="far fa-check-circle"
+          style={{ color: "yellowgreen", marginRight: "3px" }}
+        />{" "}
+        Password reset email sent!
+      </div>
+    </div>
+  );
 }
 
 export default ForgotPassword;
