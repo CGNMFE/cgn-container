@@ -1,16 +1,12 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect
-} from "react-router-dom";
-import Dashboard from "./components/Dashboard/Dashboard";
-import Login from "./components/Auth/Login";
-import Signup from "./components/Auth/Signup";
-import Banner from "./components/Banner/Banner";
-import ForgotPass from "./components/Auth/ForgotPass";
-import ForgotPassReset from "./components/Auth/ForgotPassReset";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import MicroFrontend from "./Components/MicroFrontend";
+import Dashboard from "./Components/Dashboard/Dashboard";
+import Login from "./Components/Auth/Login";
+import Signup from "./Components/Auth/Signup";
+import Banner from "./Components/Banner/Banner";
+import ForgotPass from "./Components/Auth/ForgotPass";
+import ForgotPassReset from "./Components/Auth/ForgotPassReset";
 import { connect } from "react-redux";
 import { login } from "./Redux/Reducers/authReducer";
 import { Auth } from "aws-amplify";
@@ -50,7 +46,7 @@ class App extends Component {
         <Route path="/auth" component={Banner} />
         <Switch>
           <Route exact path="/" component={Dashboard} />
-          <Route exact path="/auth/login" component={Login} />
+          <Route exact path="/auth/" component={Login} />
           <Route exact path="/auth/signup" component={Signup} />
           <Route exact path="/auth/forgot" component={ForgotPass} />
           <Route exact path="/auth/resetpass" component={ForgotPassReset} />

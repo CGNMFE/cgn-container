@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from "./node_modules/react";
 import "./Auth.css";
-import { Auth } from "aws-amplify";
+import { Auth } from "./node_modules/aws-amplify";
 import Validate from "./utility/FormValidation";
 import FormErrors from "./utility/FormErrors";
-import { Redirect, Link } from "react-router-dom";
+import { Redirect, Link } from "./node_modules/react-router-dom";
 
 function ForgotPassword() {
   const [verificationCode, setCode] = React.useState("");
