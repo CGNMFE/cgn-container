@@ -100,7 +100,7 @@ function ForgotPassword() {
     );
   }
   return (
-    <div className="parent-container">
+    <AuthWrapper>
       <div>
         <i
           className="far fa-check-circle"
@@ -108,7 +108,7 @@ function ForgotPassword() {
         />{" "}
         Password reset email sent!
       </div>
-    </div>
+    </AuthWrapper>
   );
 }
 
