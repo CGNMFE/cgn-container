@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { login } from "../../Redux/Reducers/authReducer";
 import { Redirect } from "react-router-dom";
@@ -25,6 +25,8 @@ export function Login(props) {
   });
 
   let { user } = props;
+
+  useEffect(() => {}, [user]);
 
   function clearErrors() {
     setErrors({
@@ -60,13 +62,8 @@ export function Login(props) {
     e.preventDefault();
     const response = await Auth.completeNewPassword(user, newPassword);
     console.log(response);
-    if (response) {
-      const signInResponse = await Auth.signIn({
-        username,
-        newPassword
-      });
-      props.login(signInResponse);
-    }
+    const currentUser = await Auth.currentAuthenticatedUser();
+    props.login(currentUser);
   }
 
   if (user && user.username && user.challengeName !== "NEW_PASSWORD_REQUIRED") {
