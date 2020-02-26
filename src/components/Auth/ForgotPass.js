@@ -34,15 +34,16 @@ function ForgotPassword() {
     if (error) {
       setErrors({ ...errors, ...error });
     }
-    try {
-      let response = await Auth.forgotPassword(email);
-      console.log("Reset request obj: ", response);
-      setResetting(true);
-    } catch (error) {
-      let err = null;
-      !error.message ? (err = { message: error }) : (err = error);
-      setErrors({ ...errors, cognito: err });
-    }
+    if (email.includes("@"))
+      try {
+        let response = await Auth.forgotPassword(email);
+        console.log("Reset request obj: ", response);
+        setResetting(true);
+      } catch (error) {
+        let err = null;
+        !error.message ? (err = { message: error }) : (err = error);
+        setErrors({ ...errors, cognito: err });
+      }
   }
 
   if (!resetting) {
