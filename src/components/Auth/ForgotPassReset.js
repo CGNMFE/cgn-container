@@ -3,7 +3,13 @@ import "./Auth.css";
 import { Auth } from "aws-amplify";
 import Validate from "./utility/FormValidation";
 import FormErrors from "./utility/FormErrors";
-import { Redirect, Link } from "react-router-dom";
+import {
+  AuthWrapper,
+  AuthContainer,
+  AuthForm,
+  AuthButton
+} from "../../styledcomponents";
+import { Redirect } from "react-router-dom";
 
 function ForgotPassword(props) {
   const [verificationCode, setCode] = React.useState("");
@@ -64,13 +70,14 @@ function ForgotPassword(props) {
       }
     } else setErrors({ ...errors, passwordmatch: true });
   }
+
   if (reset === true) return <Redirect to="/" />;
   console.log(props.history);
   return (
-    <div className="parent-container">
-      <section className="auth-container">
+    <AuthWrapper>
+      <AuthContainer>
         <h4 className="title is-4">New Password</h4>
-        <form style={{ padding: "15px" }}>
+        <AuthForm>
           <div
             style={{
               display: "flex",
@@ -79,101 +86,72 @@ function ForgotPassword(props) {
               textAlign: "center"
             }}
           >
-            <p>
-              Please enter the verification code sent to your email address
-              along with your email address and a new password.
-            </p>
+            <p>Please verify your email address and enter your new password.</p>
             <FormErrors formerrors={errors} />
           </div>
-          <div className="input-container">
-            <div className="field">
-              <label>
-                <b>Verification Code:</b>
-              </label>
-              <p className="control has-icons-left">
-                <input
-                  className="input"
-                  // id="username"
-                  type="text"
-                  value={verificationCode}
-                  placeholder="Enter Verification Code"
-                  onChange={e => setCode(e.target.value)}
-                  required
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-user-check"></i>
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <label>
-                <b>Email:</b>
-              </label>
-              <p className="control has-icons-left">
-                <input
-                  className="input"
-                  id="email"
-                  type="email"
-                  placeholder="Enter Email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  required
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-envelope"></i>
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <label>
-                <b>New Password:</b>
-              </label>
-              <p className="control has-icons-left">
-                <input
-                  className="input"
-                  id="password"
-                  type="password"
-                  placeholder="Enter Password"
-                  value={newPass1}
-                  onChange={e => setNewPass1(e.target.value)}
-                  required
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-lock"></i>
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <label>
-                <b>Confirm Password:</b>
-              </label>
-              <p className="control has-icons-left">
-                <input
-                  className="input"
-                  id="password"
-                  type="password"
-                  placeholder="Enter Password"
-                  value={newPass2}
-                  onChange={e => setNewPass2(e.target.value)}
-                  required
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-lock"></i>
-                </span>
-              </p>
-            </div>
-            <button
-              type="submit"
-              className="login-button"
-              onClick={e => sendResetRequest(e)}
-              // disabled
-            >
-              Submit Changes
-            </button>
+          <div className="field">
+            <label>
+              <b>Email:</b>
+            </label>
+            <p className="control has-icons-left">
+              <input
+                className="input"
+                id="email"
+                type="email"
+                placeholder="Enter Email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                required
+              />
+              <span className="icon is-small is-left">
+                <i className="fas fa-envelope"></i>
+              </span>
+            </p>
           </div>
-        </form>
-      </section>
-    </div>
+          <div className="field">
+            <label>
+              <b>New Password:</b>
+            </label>
+            <p className="control has-icons-left">
+              <input
+                className="input"
+                id="password"
+                type="password"
+                placeholder="Enter Password"
+                value={newPass1}
+                onChange={e => setNewPass1(e.target.value)}
+                required
+              />
+              <span className="icon is-small is-left">
+                <i className="fas fa-lock"></i>
+              </span>
+            </p>
+          </div>
+          <div className="field">
+            <label>
+              <b>Confirm Password:</b>
+            </label>
+            <p className="control has-icons-left">
+              <input
+                className="input"
+                id="password"
+                type="password"
+                placeholder="Enter Password"
+                value={newPass2}
+                onChange={e => setNewPass2(e.target.value)}
+                required
+              />
+              <span className="icon is-small is-left">
+                <i className="fas fa-lock"></i>
+              </span>
+            </p>
+          </div>
+          <AuthButton type="submit" onClick={e => sendResetRequest(e)}>
+            Submit Changes
+          </AuthButton>
+        </AuthForm>
+      </AuthContainer>
+    </AuthWrapper>
   );
 }
 

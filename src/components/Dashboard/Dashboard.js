@@ -15,7 +15,6 @@ export class Dashboard extends Component {
     console.log(this.props.user);
 
     if (user && !user.username) {
-      console.log("lol");
       return <Redirect to="/auth" />;
     }
     return (

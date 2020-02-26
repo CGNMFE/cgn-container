@@ -2,8 +2,12 @@ import React from "react";
 import "./Auth.css";
 import Validate from "./utility/FormValidation";
 import FormErrors from "./utility/FormErrors";
-import ForgotPassReset from "./ForgotPassReset";
-import { Redirect } from "react-router-dom";
+import {
+  AuthWrapper,
+  AuthContainer,
+  AuthForm,
+  AuthButton
+} from "../../styledcomponents";
 import { Auth } from "aws-amplify";
 
 function ForgotPassword() {
@@ -43,15 +47,16 @@ function ForgotPassword() {
 
   if (!resetting) {
     return (
-      <div className="parent-container">
-        <section className="auth-container">
+      <AuthWrapper>
+        <AuthContainer>
           <h4 className="title is-4">Forgot Password</h4>
-          <form style={{ padding: "15px" }}>
+          <AuthForm>
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: "center"
+                alignItems: "center",
+                textAlign: "center"
               }}
             >
               <p>
@@ -59,41 +64,39 @@ function ForgotPassword() {
                 email you a password reset link!
               </p>
             </div>
-            <div className="input-container">
-              <FormErrors formerrors={errors} />
-              <div className="field">
-                <label>
-                  <b>Email:</b>
-                </label>
-                <p className="control has-icons-left">
-                  <input
-                    className="input"
-                    id="email"
-                    type="email"
-                    placeholder="Enter Email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    required
-                  />
-                  <span className="icon is-small is-left">
-                    <i className="fas fa-envelope"></i>
-                  </span>
-                </p>
-              </div>
-              <section style={{ textAlign: "center" }}>
-                <button
-                  type="submit"
-                  className="login-button"
-                  onClick={e => sendResetRequest(e)}
-                >
-                  Send reset link
-                </button>
-                <a href="/auth">Back</a>
-              </section>
+            <FormErrors formerrors={errors} />
+            <div className="field">
+              <label>
+                <b>Email:</b>
+              </label>
+              <p className="control has-icons-left">
+                <input
+                  className="input"
+                  id="email"
+                  type="email"
+                  placeholder="Enter Email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  required
+                />
+                <span className="icon is-small is-left">
+                  <i className="fas fa-envelope"></i>
+                </span>
+              </p>
             </div>
-          </form>
-        </section>
-      </div>
+            <section style={{ textAlign: "center" }}>
+              <AuthButton
+                type="submit"
+                className="login-button"
+                onClick={e => sendResetRequest(e)}
+              >
+                Send reset link
+              </AuthButton>
+              <a href="/auth">Back</a>
+            </section>
+          </AuthForm>
+        </AuthContainer>
+      </AuthWrapper>
     );
   }
   return (

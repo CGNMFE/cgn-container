@@ -1,17 +1,16 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { RouteWrapper } from "./styledcomponents";
 import MicroFrontend from "./Components/MicroFrontend";
+import Header from "./Components/Header/Header";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Login from "./Components/Auth/Login";
-import Signup from "./Components/Auth/Signup";
 import Banner from "./Components/Banner/Banner";
 import ForgotPass from "./Components/Auth/ForgotPass";
 import ForgotPassReset from "./Components/Auth/ForgotPassReset";
 import { connect } from "react-redux";
 import { login } from "./Redux/Reducers/authReducer";
 import { Auth } from "aws-amplify";
-
-import "./App.css";
 
 class App extends Component {
   constructor(props) {
@@ -40,18 +39,24 @@ class App extends Component {
   }
 
   render() {
-    const { user } = this.props.user;
+    const { user } = this.props;
     return (
-      <Router>
-        <Route path="/auth" component={Banner} />
-        <Switch>
-          <Route exact path="/" component={Dashboard} />
-          <Route exact path="/auth/" component={Login} />
-          <Route exact path="/auth/signup" component={Signup} />
-          <Route exact path="/auth/forgot" component={ForgotPass} />
-          <Route exact path="/auth/resetpass" component={ForgotPassReset} />
-        </Switch>
-      </Router>
+      <RouteWrapper
+        flexDirection={
+          user && user.username && !user.challengeName ? "column" : "row"
+        }
+      >
+        <Router>
+          {user && user.username && !user.challengeName ? <Header /> : null}
+          <Route path="/auth" component={Banner} />
+          <Switch>
+            <Route exact path="/" component={Dashboard} />
+            <Route exact path="/auth/" component={Login} />
+            <Route exact path="/auth/forgot" component={ForgotPass} />
+            <Route exact path="/auth/resetpass" component={ForgotPassReset} />
+          </Switch>
+        </Router>
+      </RouteWrapper>
     );
   }
 }

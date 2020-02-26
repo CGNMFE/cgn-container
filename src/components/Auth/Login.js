@@ -2,7 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import { login } from "../../Redux/Reducers/authReducer";
 import { Redirect } from "react-router-dom";
-import Amplify, { Auth } from "aws-amplify";
+import {
+  AuthWrapper,
+  AuthContainer,
+  AuthForm,
+  AuthButton,
+  CenterRow
+} from "../../styledcomponents";
+import { Auth } from "aws-amplify";
 import "./Auth.css";
 import Validate from "./utility/FormValidation";
 import FormErrors from "./utility/FormErrors";
@@ -17,7 +24,7 @@ export function Login(props) {
     passwordmatch: false
   });
 
-  let { user, authenticated } = props;
+  let { user } = props;
 
   function clearErrors() {
     setErrors({
@@ -29,7 +36,6 @@ export function Login(props) {
 
   async function loginUser(e) {
     e.preventDefault();
-    // props.login(username, password);
     clearErrors();
     const error = Validate(e, errors);
     if (error) {
@@ -52,8 +58,15 @@ export function Login(props) {
 
   async function setNewPassword(e) {
     e.preventDefault();
-    const response = Auth.completeNewPassword(user, newPassword);
+    const response = await Auth.completeNewPassword(user, newPassword);
     console.log(response);
+    if (response) {
+      const signInResponse = await Auth.signIn({
+        username,
+        newPassword
+      });
+      props.login(signInResponse);
+    }
   }
 
   if (user && user.username && user.challengeName !== "NEW_PASSWORD_REQUIRED") {
@@ -61,81 +74,67 @@ export function Login(props) {
     return <Redirect to="/" />;
   }
   return (
-    <div className="parent-container">
-      <div className="auth-container">
+    <AuthWrapper background="blue">
+      <AuthContainer>
         <h4 className="title is-4">Sign In</h4>
         <FormErrors formerrors={errors} />
-        <form>
-          <div className="input-container">
-            <div className="field">
-              <label>
-                <b>Username:</b>
-              </label>
-              <p className="control has-icons-left">
-                <input
-                  className="input"
-                  id="username"
-                  type="text"
-                  value={username}
-                  placeholder="Enter Username"
-                  onChange={e => setUsername(e.target.value)}
-                  required
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-user"></i>
-                </span>
-              </p>
-            </div>
-            <div className="field">
-              <label>
-                {user && user.username ? (
-                  <b>New Password:</b>
-                ) : (
-                  <b>Password:</b>
-                )}
-              </label>
-              <p className="control has-icons-left">
-                <input
-                  className="input"
-                  id="password"
-                  type="password"
-                  placeholder="Enter Password"
-                  value={user && user.username ? newPassword : password}
-                  onChange={
-                    user && user.username
-                      ? e => setNewPass(e.target.value)
-                      : e => setPassword(e.target.value)
-                  }
-                  required
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-lock"></i>
-                </span>
-              </p>
-            </div>
-            <button
-              type="submit"
-              className="login-button"
-              onClick={
-                user && user.username
-                  ? e => setNewPassword(e)
-                  : e => loginUser(e)
-              }
-            >
-              Login
-            </button>
-            <section id="auth-bottom">
-              <div>
-                Not a member? <a href="/auth/signup">Sign Up</a>
-              </div>
-              <div>
-                <a href="/auth/forgot">Forgot your password?</a>
-              </div>
-            </section>
+        <AuthForm>
+          <div className="field">
+            <label>
+              <b>Username:</b>
+            </label>
+            <p className="control has-icons-left">
+              <input
+                className="input"
+                id="username"
+                type="text"
+                value={username}
+                placeholder="Enter Username"
+                onChange={e => setUsername(e.target.value)}
+                required
+              />
+              <span className="icon is-small is-left">
+                <i className="fas fa-user"></i>
+              </span>
+            </p>
           </div>
-        </form>
-      </div>
-    </div>
+          <div className="field">
+            <label>
+              {user && user.username ? <b>New Password:</b> : <b>Password:</b>}
+            </label>
+            <p className="control has-icons-left">
+              <input
+                className="input"
+                id="password"
+                type="password"
+                placeholder="Enter Password"
+                value={user && user.username ? newPassword : password}
+                onChange={
+                  user && user.username
+                    ? e => setNewPass(e.target.value)
+                    : e => setPassword(e.target.value)
+                }
+                required
+              />
+              <span className="icon is-small is-left">
+                <i className="fas fa-lock"></i>
+              </span>
+            </p>
+          </div>
+          <AuthButton
+            type="submit"
+            onClick={
+              user && user.username ? e => setNewPassword(e) : e => loginUser(e)
+            }
+          >
+            Login
+          </AuthButton>
+          <CenterRow>
+            <a href="/auth/forgot">Forgot your password?</a>
+          </CenterRow>
+        </AuthForm>
+      </AuthContainer>
+    </AuthWrapper>
   );
 }
 
