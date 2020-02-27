@@ -62,7 +62,7 @@ function ForgotPassword() {
             >
               <p>
                 Please enter the email address linked to your account. We'll
-                email you a password reset link!
+                send you a link to reset your password.
               </p>
             </div>
             <FormErrors formerrors={errors} />

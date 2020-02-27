@@ -74,7 +74,6 @@ export function Login(props) {
     <AuthWrapper background="blue">
       <AuthContainer>
         <h4 className="title is-4">Sign In</h4>
-        <FormErrors formerrors={errors} />
         <AuthForm>
           <div className="field">
             <label>
@@ -117,6 +116,9 @@ export function Login(props) {
                 <i className="fas fa-lock"></i>
               </span>
             </p>
+          </div>
+          <div style={{ height: "18px" }}>
+            <FormErrors formerrors={errors} />
           </div>
           <AuthButton
             type="submit"
