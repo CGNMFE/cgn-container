@@ -50,6 +50,17 @@ export const CenterColumn = styled.div`
   align-items: center;
 `;
 
+//Header
+
+export const HeaderWrapper = styled.header`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background: #eeeeee;
+  height: 10vh;
+  width: 100%;
+`;
+
 //Auth
 
 export const AuthWrapper = styled.div`

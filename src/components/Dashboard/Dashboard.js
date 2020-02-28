@@ -27,16 +27,6 @@ export class Dashboard extends Component {
           alignItems: "center"
         }}
       >
-        <img
-          style={{
-            height: "100px",
-            width: "100px",
-            borderRadius: "50%",
-            border: "1px solid yellowgreen"
-          }}
-          src={user.attributes.profilePic}
-          alt="profile art"
-        />
         <h2>Welcome, {user.username}!</h2>
 
         <button onClick={this.logoutUser}>Logout</button>

@@ -8,8 +8,9 @@ import Login from "./Components/Auth/Login";
 import Banner from "./Components/Banner/Banner";
 import ForgotPass from "./Components/Auth/ForgotPass";
 import ForgotPassReset from "./Components/Auth/ForgotPassReset";
+import CreateUser from "./Components/Admin/CreateUser";
 import { connect } from "react-redux";
-import { login } from "./Redux/Reducers/authReducer";
+import { login, logout } from "./Redux/Reducers/authReducer";
 import { Auth } from "aws-amplify";
 
 class App extends Component {
@@ -47,13 +48,16 @@ class App extends Component {
         }
       >
         <Router>
-          {user && user.username && !user.challengeName ? <Header /> : null}
+          {user && user.username && !user.challengeName ? (
+            <Header user={this.props.user} logout={this.props.logout} />
+          ) : null}
           <Route path="/auth" component={Banner} />
           <Switch>
             <Route exact path="/" component={Dashboard} />
             <Route exact path="/auth/" component={Login} />
             <Route exact path="/auth/forgot" component={ForgotPass} />
             <Route exact path="/auth/resetpass" component={ForgotPassReset} />
+            <Route exact path="/admin/createuser" component={CreateUser} />
           </Switch>
         </Router>
       </RouteWrapper>
@@ -65,4 +69,4 @@ function mapStateToProps(state) {
   return state.user;
 }
 
-export default connect(mapStateToProps, { login })(App);
+export default connect(mapStateToProps, { login, logout })(App);
