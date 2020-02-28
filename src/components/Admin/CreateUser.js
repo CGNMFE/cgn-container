@@ -1,6 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import { register } from "../../Redux/Reducers/authReducer";
+import {
+  AuthWrapper,
+  AuthContainer,
+  AuthForm,
+  AuthButton
+} from "../../styledcomponents";
 import { Redirect, Link } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import Validate from "../Auth/utility/FormValidation";
@@ -64,12 +70,12 @@ export function Signup(props) {
       </div>
     );
   return (
-    <div className="parent-container">
-      <div className="auth-container">
-        <h4 className="title is-4">Sign up</h4>
+    <AuthWrapper>
+      <AuthContainer>
+        <h4 className="title is-4">Create a User</h4>
 
         <FormErrors formerrors={errors} />
-        <form>
+        <AuthForm>
           <div className="input-container">
             <div className="field">
               <label>
@@ -147,22 +153,17 @@ export function Signup(props) {
                 </span>
               </p>
             </div>
-            <button
+            <AuthButton
               type="submit"
               className="login-button"
               onClick={e => registerUser(e)}
             >
               Register
-            </button>
-            <Link to="/auth/login">
-              <button type="button" className="cancel-button">
-                Cancel
-              </button>
-            </Link>
+            </AuthButton>
           </div>
-        </form>
-      </div>
-    </div>
+        </AuthForm>
+      </AuthContainer>
+    </AuthWrapper>
   );
 }
 function mapStateToProps(state) {
